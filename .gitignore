@@ -1,0 +1,4 @@
+inference_nanodet/build
+inference_yolact/build
+inference_yoloFastest/build
+inference_yolov4/build
