@@ -2,7 +2,7 @@
 
 ## Requirements
 
-So I only inferenced them on CPU(laptop), haven't try GPU yet.
+So I only inferenced them on CPU(laptop), haven't tried GPU yet.
 
 ```
 OS:           Linux (Ubuntu 18.04)
