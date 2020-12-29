@@ -11,6 +11,11 @@ Libraries:    OpenCV, ncnn
 
 More info could be found at [OpenCV](https://opencv.org/) and [ncnn](https://github.com/Tencent/ncnn)
 
+*Note:* execute the following line (or add it to `~/.bashrc`/`~/.zshrc`)
+```bash
+export ncnn_DIR=/home/aooooo/ncnn/build/install/lib/cmake/ncnn
+```
+
 ## How to use
 
 Basically, the name of the folder indicates which model it contains. So go into the that directory, try
