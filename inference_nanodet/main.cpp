@@ -234,7 +234,7 @@ int image_demo(NanoDet &detector, const char* imagepath)
         cv::Mat image = cv::imread(img_name);
         if (image.empty())
         {
-            fprintf(stderr, "cv::imread %s failed\n", img_name);
+            fprintf(stderr, "cv::imread %s failed\n", img_name.c_str());
             return -1;
         }
         object_rect effect_roi;
@@ -307,8 +307,7 @@ int benchmark(NanoDet& detector)
             ex.extract(head_info.cls_layer.c_str(), cls_pred); 
         }
         double end = ncnn::get_current_time();
-
-        double time = end - start;
+double time = end - start;
         if (i >= warm_up) 
         {
             time_min = (std::min)(time_min, time);
@@ -334,7 +333,7 @@ int main(int argc, char** argv)
     switch (mode)
     {
     case 0:{
-        int cam_id = atoi(argv[2]);
+        int cam_id = 0;
         webcam_demo(detector, cam_id);
         break;
         }
