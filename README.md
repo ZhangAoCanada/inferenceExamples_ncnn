@@ -13,7 +13,7 @@ More info could be found at [OpenCV](https://opencv.org/) and [ncnn](https://git
 
 *Note:* execute the following line (or add it to `~/.bashrc`/`~/.zshrc`)
 ```bash
-export ncnn_DIR=/home/aooooo/ncnn/build/install/lib/cmake/ncnn
+export ncnn_DIR=$(path_to_your_ncnn_directory)/build/install/lib/cmake/ncnn
 ```
 
 ## How to use
