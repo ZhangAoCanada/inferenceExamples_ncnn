@@ -33,4 +33,5 @@ target_link_libraries(
     yolact 
     ncnn
     ${OpenCV_LIBS} 
+	OpenMP::OpenMP_CXX
 )
