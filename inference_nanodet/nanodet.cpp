@@ -1,11 +1,9 @@
-//
 // Create by RangiLyu
 // 2020 / 10 / 2
-//
 
 #include "nanodet.h"
 #include <benchmark.h>
-// #include <iostream>
+ #include <iostream>
 
 inline float fast_exp(float x) 
 {

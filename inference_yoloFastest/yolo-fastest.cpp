@@ -1,3 +1,4 @@
+/* Originated from https://github.com/dog-qiuqiu/Yolo-Fastest */
 #include "benchmark.h"
 #include "cpu.h"
 #include "datareader.h"
@@ -9,6 +10,8 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <stdio.h>
 #include <vector>
+#include <iostream>
+#include <sstream>
 #include <algorithm>
 
 int demo(cv::Mat& image, ncnn::Net &detector, int detector_size_width, int detector_size_height)
@@ -77,34 +80,71 @@ int demo(cv::Mat& image, ncnn::Net &detector, int detector_size_width, int detec
     return 0;
 }
 
-//摄像头测试
-int test_cam()
+int main(int argc, char** argv)
 {
-    //定义yolo-fastest VOC检测器
+	cv::VideoCapture cap;
+	cv::Mat frame, image;
+    if (argc != 3)
+    {
+        fprintf(stderr, "Usage: %s [mode=0,1,2] [filename]\n", argv[0]);
+        return -1;
+    }
+
+	std::stringstream str_val; 
+    int mode;
+	str_val << argv[1];
+	str_val >> mode;
+
+    const char* filename = argv[2];
+
     ncnn::Net detector;  
     detector.load_param("yolo-fastest.param");
     detector.load_model("yolo-fastest.bin");
     int detector_size_width  = 320;
     int detector_size_height = 320;
 
-    cv::Mat frame;
-    cv::VideoCapture cap("/mnt/f/test_data/kitti_seq0.avi");
+	if (mode == 1)
+	{
+		frame = cv::imread(filename);
+		double start = ncnn::get_current_time();
+		demo(frame, detector, detector_size_width, detector_size_height);
+		double end = ncnn::get_current_time();
+		double time = end - start;
+		printf("Time:%7.2f \n",time);
+		cv::imshow("yolo-fastest", frame);
+		cv::waitKey(0);
+	} else if (mode == 2)
+	{
+		cap.open(filename);
+		while (true)
+		{
+			cap >> frame;
+			double start = ncnn::get_current_time();
+			demo(frame, detector, detector_size_width, detector_size_height);
+			double end = ncnn::get_current_time();
+			double time = end - start;
+			printf("Time:%7.2f \n",time);
+			cv::imshow("yolo-fastest", frame);
+			cv::waitKey(1);
+		}
+	} else if (mode == 0)
+	{
+		cap.open(0);
+		while (true)
+		{
+			cap >> frame;
+			double start = ncnn::get_current_time();
+			demo(frame, detector, detector_size_width, detector_size_height);
+			double end = ncnn::get_current_time();
+			double time = end - start;
+			printf("Time:%7.2f \n",time);
+			cv::imshow("yolo-fastest", frame);
+			cv::waitKey(1);
+		}
+	} else
+	{
+		std::cout << "Wrong input mode, choose one from 0, 1, 2." << std::endl;
+	}
 
-    while (true)
-    {
-        cap >> frame;
-        double start = ncnn::get_current_time();
-        demo(frame, detector, detector_size_width, detector_size_height);
-        double end = ncnn::get_current_time();
-        double time = end - start;
-        printf("Time:%7.2f \n",time);
-        cv::imshow("demo", frame);
-        cv::waitKey(1);
-    }
-    return 0;
-}
-int main()
-{
-    test_cam();
     return 0;
 }
