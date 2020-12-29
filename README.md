@@ -24,4 +24,4 @@ for compiling it. Change the image/video path in `./inference.sh` and run
 
 ## Waiting for improvement
 
-- Consistency: make the usage of all inferences as `./program mode path_to_video_or_image`, where mode can be 0, 1, 2, with 0 as webcam mode, 1 as image mode, 2 as video mode. Currently, only `yoloFastest` is not following this rule.
+- Consistency: make the usage of all inferences as `./program mode path_to_video_or_image`, where mode can be 0, 1, 2, with 0 as webcam mode, 1 as image mode, 2 as video mode. Currently, all of them are following this rule.
