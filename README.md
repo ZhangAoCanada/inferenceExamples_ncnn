@@ -18,24 +18,36 @@ export ncnn_DIR=$(path_to_your_ncnn_directory)/build/install/lib/cmake/ncnn
 
 ## How to use
 
+### How to compile
 Basically, the name of the folder indicates which model it contains. So go into the that directory, try
 ```bash
 ./build.sh
 ```
 
-- If you want to inference on a specific video, change the video path in `./inference.sh` which follows the format as
+### Video inference
+If you want to inference on a specific video, change the video path in `./inference.sh` which follows the format as
 ```bash
 ./build/$(target_executable) 2 $(path_to_your_video)
 ```
-then run `./inference.sh`.
 
-- If you want to inference on a specific image, change the image path in `./inference.sh` which follows the format as
+then run 
+```bash
+./inference.sh
+```
+
+### Image inference
+If you want to inference on a specific image, change the image path in `./inference.sh` which follows the format as
 ```bash
 ./build/$(target_executable) 1 $(path_to_your_image)
 ```
-then run `./inference.sh`.
 
-- If you want to inference on a webcam(like the one that most laptops have), run
+then run 
+```bash
+./inference.sh
+```
+
+### Webcam inference
+If you want to inference on a webcam(like the one that most laptops have), run
 ```bash
 ./webcam.sh
 ```
