@@ -22,25 +22,18 @@ Basically, the name of the folder indicates which model it contains. So go into 
 ```bash
 ./build.sh
 ```
-for compiling it. 
 
 - If you want to inference on a specific video, change the video path in `./inference.sh` which follows the format as
 ```bash
 ./build/$(target_executable) 2 $(path_to_your_video)
 ```
-then run 
-```bash
-./inference.sh
-```
+then run `./inference.sh`.
 
 - If you want to inference on a specific image, change the image path in `./inference.sh` which follows the format as
 ```bash
 ./build/$(target_executable) 1 $(path_to_your_image)
 ```
-then run 
-```bash
-./inference.sh
-```
+then run `./inference.sh`.
 
 - If you want to inference on a webcam(like the one that most laptops have), run
 ```bash
