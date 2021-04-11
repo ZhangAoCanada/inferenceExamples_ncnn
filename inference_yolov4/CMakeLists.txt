@@ -26,8 +26,7 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-
-add_executable(yolov4 yolov4.cpp)
+add_executable(yolov4 yolov4.cpp draw.cpp)
 
 target_link_libraries(
     yolov4 

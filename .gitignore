@@ -6,3 +6,4 @@ inference_nanodet/tags
 inference_yolact/tags
 inference_yoloFastest/tags
 inference_yolov4/tags
+inference_yolov4/.vscode

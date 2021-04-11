@@ -12,6 +12,7 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include <string>
 
 #include <stdio.h>
 
@@ -21,6 +22,9 @@
 #ifdef NCNN_PROFILING
 #include "benchmark.h"
 #endif
+#include "draw.h"
+
+#define LOG(...) std::cout << __VA_ARGS__ << "\n"
 
 
 struct Object
@@ -180,6 +184,55 @@ static int draw_objects(const cv::Mat& bgr, const std::vector<Object>& objects, 
     return 0;
 }
 
+
+static void letsDraw(const cv::Mat& bgr, Draw& drawer, const std::vector<Object>& objects, int is_streaming)
+{
+    static const char* class_names[] = {"background", "person", "bicycle",
+                                        "car", "motorbike", "aeroplane", "bus", "train", "truck",
+                                        "boat", "traffic light", "fire hydrant", "stop sign",
+                                        "parking meter", "bench", "bird", "cat", "dog", "horse",
+                                        "sheep", "cow", "elephant", "bear", "zebra", "giraffe",
+                                        "backpack", "umbrella", "handbag", "tie", "suitcase",
+                                        "frisbee", "skis", "snowboard", "sports ball", "kite",
+                                        "baseball bat", "baseball glove", "skateboard", "surfboard",
+                                        "tennis racket", "bottle", "wine glass", "cup", "fork",
+                                        "knife", "spoon", "bowl", "banana", "apple", "sandwich",
+                                        "orange", "broccoli", "carrot", "hot dog", "pizza", "donut",
+                                        "cake", "chair", "sofa", "pottedplant", "bed", "diningtable",
+                                        "toilet", "tvmonitor", "laptop", "mouse", "remote", "keyboard",
+                                        "cell phone", "microwave", "oven", "toaster", "sink",
+                                        "refrigerator", "book", "clock", "vase", "scissors",
+                                        "teddy bear", "hair drier", "toothbrush"
+                                       };
+
+    cv::Mat image = bgr.clone();
+
+	for (auto& obj: objects) {
+        int class_ind = obj.label;
+		auto box = obj.rect;
+        int x_min = box.x;
+        int y_min = box.y;
+        int x_max = x_min + box.width;
+        int y_max = y_min + box.height;
+        std::string class_name = class_names[class_ind];
+        drawer.drawBox(image, x_min, x_max, y_min, y_max, class_ind);
+        drawer.drawText(image, class_name, x_min, x_max, y_min, y_max, class_ind);
+	}
+
+    cv::imshow("image", image);
+
+    if (is_streaming)
+    {
+        cv::waitKey(1);
+    }
+    else
+    {
+        cv::waitKey(0);
+    }
+}
+
+
+
 int main(int argc, char** argv)
 {
     cv::Mat frame;
@@ -193,6 +246,10 @@ int main(int argc, char** argv)
 
     int target_size = 0;
     int is_streaming = 0;
+
+    // NOTE: color initialization should be done once 
+    const int num_classes = 81;
+    Draw drawer(num_classes);
 
     if (argc < 3)
     {
@@ -312,7 +369,8 @@ int main(int argc, char** argv)
         double t_draw_start = ncnn::get_current_time();
 #endif
 
-        draw_objects(frame, objects, is_streaming); //Draw detection results on opencv image
+        //draw_objects(frame, objects, is_streaming); //Draw detection results on opencv image
+		letsDraw(frame, drawer, objects, is_streaming); //Draw detection results on opencv image
 
 #ifdef NCNN_PROFILING
         double t_draw_end = ncnn::get_current_time();
